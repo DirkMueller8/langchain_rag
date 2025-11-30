@@ -4,28 +4,34 @@ import base64
 import shutil
 import textwrap
 
-from dotenv import load_dotenv
+from dotenv import load_dotenv # type: ignore
 
-from langchain_community.document_loaders import TextLoader
-from langchain_community.vectorstores import FAISS
-from langchain_text_splitters import MarkdownTextSplitter
+from langchain_community.document_loaders import TextLoader # type: ignore
+from langchain_community.vectorstores import FAISS # type: ignore
+from langchain_text_splitters import MarkdownTextSplitter # type: ignore
 
-from langchain_openai import OpenAIEmbeddings, ChatOpenAI
+from langchain_openai import OpenAIEmbeddings, ChatOpenAI # type: ignore
 
-from langchain_core.prompts import ChatPromptTemplate
-from langchain_core.output_parsers import StrOutputParser
-from langchain_core.runnables import RunnableParallel, RunnablePassthrough
-from langchain_core.documents import Document
-from langchain_core.messages import HumanMessage
+from langchain_core.prompts import ChatPromptTemplate # type: ignore
+from langchain_core.output_parsers import StrOutputParser # type: ignore
+from langchain_core.runnables import RunnableParallel, RunnablePassthrough # type: ignore
+from langchain_core.documents import Document # type: ignore
+from langchain_core.messages import HumanMessage # type: ignore
 
 # Load environment variables
 load_dotenv()
 
 
+# Printout the extracted text
 def print_wrapped(text: str) -> None:
-    """Print text wrapped to terminal width."""
+    """Print text wrapped to terminal width, preserving existing line breaks."""
     width = shutil.get_terminal_size((80, 20)).columns
-    print(textwrap.fill(text, width=width))
+    for line in text.split("\n"):
+        if line.strip() == "":
+            # Preserve blank lines
+            print()
+        else:
+            print(textwrap.fill(line, width=width))
 
 
 def format_docs(docs):
@@ -34,6 +40,8 @@ def format_docs(docs):
 
 
 class RegulatoryRAG:
+    """RAG helper that embeds regulatory documents and answers 
+    user questions with GPT-4o and FAISS."""
     def __init__(self):
         # LLM for answering questions
         self.llm = ChatOpenAI(model="gpt-4o", temperature=0)
