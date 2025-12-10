@@ -1,4 +1,15 @@
-# LangChain RAG
+# Hybrid LangChain RAG Implementation for a ChatBot 
+
+**********************************************
+Software:	&emsp;	Python 3.12
+
+Version:	&emsp;  1.0
+
+Date: 	&emsp;		Nov 29, 2025
+
+Author:	&emsp;		Dirk Mueller
+**********************************************
+
 ## Purpose  
 This repository contains a small Retrieval-Augmented Generation (RAG) demo that lets you ask natural‑language questions about local regulatory documents (for example Medical Device Regulation or FDA guidance documents) from the command line.  
 Markdown documents are indexed into a vector store, and GPT‑4o is used to answer questions grounded in those documents.  
